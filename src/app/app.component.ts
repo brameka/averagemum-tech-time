@@ -39,7 +39,9 @@ export class MyApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.service.load();
+      this.service.addPerson({
+        name: 'App'
+      })
     });
   }
 

@@ -6,7 +6,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { PeoplePage } from '../pages/people/people';
-import { CreatePeoplePage } from '../pages/people/create-people';
+import { CreatePeoplePopover } from '../pages/people/create-people-popover';
 
 import { OnboardPage } from '../pages/onboard/onboard';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -20,7 +20,7 @@ import { DataService } from '../services/data.service';
     HomePage,
     ListPage,
     PeoplePage,
-    CreatePeoplePage,
+    CreatePeoplePopover,
     OnboardPage
   ],
   imports: [
@@ -34,14 +34,13 @@ import { DataService } from '../services/data.service';
     HomePage,
     ListPage,
     PeoplePage,
-    CreatePeoplePage,
+    CreatePeoplePopover,
     OnboardPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     DataService,
-    CreatePeoplePage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

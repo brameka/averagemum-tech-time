@@ -3,22 +3,27 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>People</ion-title>
+    <ion-buttons end>
+      <button *ngIf="isEdit === false" ion-button icon-only (click)="more()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+      <button *ngIf="isEdit" ion-button clear (click)="done()">Done</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <button ion-button (click)="add()">Add</button>
-  <!-- <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+  <button ion-button (click)="present()">Add</button>
+  <button ion-button (click)="delete()">Delete</button>
+  <ion-list>
+
+    <ion-item *ngFor="let person of service.people$ | async">
+        <button ion-button icon-only *ngIf="isEdit" (click)="remove(person)">
+          <ion-icon name="home"></ion-icon>
+        </button>
+        {{person.name}}
+    </ion-item>
+
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div> -->
 </ion-content>

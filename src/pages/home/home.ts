@@ -12,9 +12,7 @@ export class HomePage {
     public navCtrl: NavController,
     private service: DataService
   ) {
-    this.service.people$.subscribe(x => {
-      console.log('data: ', x);
-    });
+
   }
 
 }
