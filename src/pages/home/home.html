@@ -12,6 +12,7 @@
   <ion-slides pager>
     <ion-slide *ngFor="let person of people$ | async">
       <h2>{{person.name}}</h2>
+      <button ion-button (click)="pick(person)">Add</button>
     </ion-slide>
   </ion-slides>
 

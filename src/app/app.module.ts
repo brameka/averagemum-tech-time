@@ -9,6 +9,7 @@ import { PeoplePage } from '../pages/people/people';
 import { CreatePeoplePopover } from '../pages/people/create-people-popover';
 
 import { JobsPage } from '../pages/jobs/jobs';
+import { JobPicker } from '../pages/jobs/job-picker';
 import { CreateJobPopover } from '../pages/jobs/create-job-popover';
 
 import { OnboardPage } from '../pages/onboard/onboard';
@@ -27,6 +28,7 @@ import { DataService } from '../services/data.service';
     PeoplePage,
     CreatePeoplePopover,
     JobsPage,
+    JobPicker,
     CreateJobPopover,
     OnboardPage
   ],
@@ -43,6 +45,7 @@ import { DataService } from '../services/data.service';
     PeoplePage,
     CreatePeoplePopover,
     JobsPage,
+    JobPicker,
     CreateJobPopover,
     OnboardPage
   ],
