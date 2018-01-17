@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
+import { ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'popover-create-people',
@@ -18,13 +18,14 @@ import { NavController, NavParams, ModalController, ViewController } from 'ionic
 })
 export class CreatePeoplePopover {
   name: string;
+  avatar: string;
 
   constructor(public viewController: ViewController) { }
 
   save() {
-
     this.viewController.dismiss({
-      name: this.name
+      name: this.name,
+      avatar: this.avatar
     });
   }
 

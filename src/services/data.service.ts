@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
 import _ from 'lodash';
 
@@ -9,12 +7,15 @@ import _ from 'lodash';
 export class DataService {
   people = [];
   jobs = [];
+  session = [];
   people$: BehaviorSubject<any[]>;
   jobs$: BehaviorSubject<any[]>;
+  session$: BehaviorSubject<any[]>;
 
   constructor(private storage: Storage) {
     this.jobs$ = new BehaviorSubject<any[]>([]);
     this.people$ = new BehaviorSubject<any[]>([]);
+    this.session$ = new BehaviorSubject<any[]>([]);
   }
 
   load() {
@@ -30,6 +31,8 @@ export class DataService {
     });
   }
 
+  /***************PERSON************************/
+
   addPerson(person: any) {
     this.people.push(person);
     this.people$.next(this.people);
@@ -43,7 +46,6 @@ export class DataService {
     _.remove(this.people, function(value) {
         return value.name === person.name;
     });
-    console.log('delete: ', this.people);
   }
 
   deletePeople() {
@@ -65,6 +67,17 @@ export class DataService {
 
   deleteJob(job: any) {
 
+  }
+
+  /***************PERSON************************/
+  addJobToSession(job: any) {
+    const sessionJob = {
+      job: job,
+      user: {},
+      complete: false
+    };
+    this.session.push(sessionJob);
+    this.session$.next(this.session);
   }
 
 }

@@ -8,11 +8,16 @@ import { ListPage } from '../pages/list/list';
 import { PeoplePage } from '../pages/people/people';
 import { CreatePeoplePopover } from '../pages/people/create-people-popover';
 
+import { JobsPage } from '../pages/jobs/jobs';
+import { CreateJobPopover } from '../pages/jobs/create-job-popover';
+
 import { OnboardPage } from '../pages/onboard/onboard';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { DataService } from '../services/data.service';
+
+
 
 @NgModule({
   declarations: [
@@ -21,6 +26,8 @@ import { DataService } from '../services/data.service';
     ListPage,
     PeoplePage,
     CreatePeoplePopover,
+    JobsPage,
+    CreateJobPopover,
     OnboardPage
   ],
   imports: [
@@ -35,6 +42,8 @@ import { DataService } from '../services/data.service';
     ListPage,
     PeoplePage,
     CreatePeoplePopover,
+    JobsPage,
+    CreateJobPopover,
     OnboardPage
   ],
   providers: [
