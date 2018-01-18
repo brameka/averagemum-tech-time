@@ -13,17 +13,10 @@ import { ViewController } from 'ionic-angular';
       <ion-item>
         <ion-label>Minutes</ion-label>
         <ion-select [(ngModel)]="minutes">
-          <ion-option value="5">5</ion-option>
-          <ion-option value="10">10</ion-option>
+          <ion-option value="0">0</ion-option>
           <ion-option value="15">15</ion-option>
-          <ion-option value="20">20</ion-option>
-          <ion-option value="25">25</ion-option>
           <ion-option value="30">30</ion-option>
-          <ion-option value="35">35</ion-option>
-          <ion-option value="40">40</ion-option>
           <ion-option value="45">45</ion-option>
-          <ion-option value="50">50</ion-option>
-          <ion-option value="55">55</ion-option>
         </ion-select>
       </ion-item>
       <ion-item>

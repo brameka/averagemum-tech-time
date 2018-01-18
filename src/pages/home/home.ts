@@ -60,13 +60,18 @@ export class HomePage implements OnDestroy {
       }
     });
     person.jobs = personJobs;
-
-
-
     const modal = this.modalController.create(JobPicker, {
       person: person
     });
     modal.present();
+  }
+
+  complete(person, job) {
+    console.log('complete: ', job);
+    job.complete = !job.complete;
+    let minutes: number = +job.minutes + (+job.hours * 60);
+    console.log('complete minutes: ', minutes);
+    person.time += minutes;
   }
 
   ngOnDestroy() {

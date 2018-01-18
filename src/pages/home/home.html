@@ -11,10 +11,10 @@
 
   <ion-slides pager>
     <ion-slide *ngFor="let person of people$ | async">
-      <h2>{{person.name}}</h2>
+      <h2>{{person.name}} {{person.time | time}}</h2>
       <button ion-button (click)="pick(person)">Add</button>
       <ion-list>
-          <button ion-item *ngFor="let job of person.jobs | active">
+          <button ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
               {{job.name}}: {{job.hours}}:{{job.minutes}}
           </button>
       </ion-list>

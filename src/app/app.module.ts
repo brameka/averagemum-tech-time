@@ -19,6 +19,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { DataService } from '../services/data.service';
 
 import { ActivePipe } from '../pipes/active.pipe';
+import { TimePipe } from '../pipes/time.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ActivePipe } from '../pipes/active.pipe';
     JobPicker,
     CreateJobPopover,
     OnboardPage,
-    ActivePipe
+    ActivePipe,
+    TimePipe
   ],
   imports: [
     BrowserModule,
