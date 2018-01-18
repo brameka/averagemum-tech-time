@@ -30,21 +30,40 @@ export class HomePage implements OnDestroy {
       const self = this;
       self.jobs = [];
       _.forEach(x, function(job) {
-        console.log('inside each: ', job);
+
         self.jobs.push({
           name: job.name,
           hours: job.hours,
           minutes: job.minutes,
-          active: false
-        })
+          active: false,
+          complete: false
+        });
+
       });
     });
   }
 
   pick(person: any) {
+    const personJobs: any[] = person.jobs;
+    _.each(this.jobs, function(job) {
+      let exists = personJobs.some(function (x) {
+        return x.name === job.name;
+      });
+      if(!exists) {
+        personJobs.push({
+          name: job.name,
+          hours: job.hours,
+          minutes: job.minutes,
+          active: false,
+          complete: false
+        });
+      }
+    });
+    person.jobs = personJobs;
+
+
 
     const modal = this.modalController.create(JobPicker, {
-      jobs: this.jobs,
       person: person
     });
     modal.present();

@@ -14,7 +14,7 @@
       <h2>{{person.name}}</h2>
       <button ion-button (click)="pick(person)">Add</button>
       <ion-list>
-          <button ion-item *ngFor="let job of jobs | active">
+          <button ion-item *ngFor="let job of person.jobs | active">
               {{job.name}}: {{job.hours}}:{{job.minutes}}
           </button>
       </ion-list>
