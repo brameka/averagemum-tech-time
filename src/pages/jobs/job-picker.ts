@@ -12,14 +12,17 @@ export class JobPicker {
   constructor(
     public viewController: ViewController,
     public navParams: NavParams
-  ) { 
+  ) {
     this.jobs = navParams.get('jobs');
     this.person = navParams.get('person');
-    console.log('modal person: ', navParams);
-  } 
+  }
 
   close() {
     this.viewController.dismiss();
+  }
+
+  select(job) {
+    job.active = !job.active;
   }
 
 

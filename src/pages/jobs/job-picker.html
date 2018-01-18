@@ -8,8 +8,8 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <ion-item *ngFor="let job of jobs">
-            {{job.name}}, {{job.hours}}:{{job.minutes}}
-        </ion-item>
+        <button ion-item *ngFor="let job of jobs" (click)="select(job)">
+            <ion-icon *ngIf="job.active" name="md-checkmark-circle"></ion-icon> {{job.name}}: {{job.hours}}:{{job.minutes}}
+        </button>
     </ion-list>
 </ion-content>

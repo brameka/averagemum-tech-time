@@ -18,7 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { DataService } from '../services/data.service';
 
-
+import { ActivePipe } from '../pipes/active.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { DataService } from '../services/data.service';
     JobsPage,
     JobPicker,
     CreateJobPopover,
-    OnboardPage
+    OnboardPage,
+    ActivePipe
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,12 @@
     <ion-slide *ngFor="let person of people$ | async">
       <h2>{{person.name}}</h2>
       <button ion-button (click)="pick(person)">Add</button>
+      <ion-list>
+          <button ion-item *ngFor="let job of jobs | active">
+              {{job.name}}: {{job.hours}}:{{job.minutes}}
+          </button>
+      </ion-list>
+
     </ion-slide>
   </ion-slides>
 
