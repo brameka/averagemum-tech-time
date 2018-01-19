@@ -23,6 +23,8 @@ import { TimePipe } from '../pipes/time.pipe';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { Timer } from '../components/timer/timer';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -35,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CreateJobPopover,
     OnboardPage,
     ActivePipe,
-    TimePipe
+    TimePipe,
+    Timer
   ],
   imports: [
     BrowserModule,

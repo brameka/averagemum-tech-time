@@ -11,6 +11,13 @@ import _ from 'lodash';
   templateUrl: 'home.html',
   animations: [
 
+    trigger('coin', [
+      state('boost', style({
+        transform: 'translate3d(0, -150%, 0)'
+      })),
+      transition('* => boost', animate('400ms ease'))
+    ]),
+
        trigger('flip', [
          state('flipped', style({
            transform: 'rotate(180deg)',
@@ -60,6 +67,7 @@ export class HomePage implements OnDestroy {
   flyInOutState: String = 'in';
   fadeState: String = 'visible';
   bounceState: String = 'noBounce';
+  coinState: string = 'static';
 
   people$: Observable<any[]>;
   jobs$: Observable<any[]>;
@@ -106,7 +114,8 @@ export class HomePage implements OnDestroy {
           hours: job.hours,
           minutes: job.minutes,
           active: false,
-          complete: false
+          complete: false,
+          animate: false
         });
       }
     });
@@ -118,11 +127,22 @@ export class HomePage implements OnDestroy {
   }
 
   complete(person, job) {
+    job.animate = true;
+    //this.coinState = 'boost';
+
+        // setInterval(() => {
+        //   this.flyInOutState = 'in';
+        // }, 2000);
+
     console.log('complete: ', job);
     job.complete = !job.complete;
     let minutes: number = +job.minutes + (+job.hours * 60);
+    let seconds: number = minutes * 60;
     console.log('complete minutes: ', minutes);
+
     person.time += minutes;
+    person.seconds += seconds;
+    console.log('complete seconds: ', person.seconds);
   }
 
   ngOnDestroy() {

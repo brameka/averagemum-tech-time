@@ -11,17 +11,17 @@
 
   <ion-slides pager>
     <ion-slide *ngFor="let person of people$ | async">
+      <timer #countdownTimer [timeInSeconds]="person.seconds"></timer>
       <h2>{{person.name}} {{person.time | time}}</h2>
+      <button ion-button color="light" (click)="pick(person)">Add</button>
       <button [@flip]="flipState" ion-button color="light" (click)="toggleFlip()">Flip!</button>
-
        <button [@flyInOut]="flyInOutState" ion-button color="light" (click)="toggleFlyInOut()">Fly Out!</button>
-
        <button [@fade]="fadeState" ion-button color="light" (click)="toggleFade()">Fade!</button>
-
        <button [@bounce]="bounceState" ion-button color="light" (click)="toggleBounce()">Bounce!</button>
-      <ion-list>
-          <button ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
+      <ion-list class="app-item-list">
+          <button class="app-item" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
               {{job.name}}: {{job.hours}}:{{job.minutes}}
+              <div class="app-item__coin" *ngIf="job.animate" [@coin]="coinState">Coin</div>
           </button>
       </ion-list>
 

@@ -39,6 +39,7 @@ export class PeoplePage {
     this.service.addPerson({
       name: name,
       time: 0,
+      seconds: 0,
       jobs: []
     });
     this.showSuccess();

@@ -16,19 +16,54 @@ export class DataService {
     this.jobs$ = new BehaviorSubject<any[]>([]);
     this.people$ = new BehaviorSubject<any[]>([]);
     this.session$ = new BehaviorSubject<any[]>([]);
+    this.load();
   }
 
   load() {
-    // storage.set('name', 'Max');
-    this.storage.get('jobs').then((jobs) => {
-      this.jobs = jobs;
-      this.jobs$.next(this.jobs);
+    this.addPerson({
+      name: 'Hulk',
+      time: 0,
+      seconds: 0,
+      jobs: []
     });
 
-    this.storage.get('people').then((people) => {
-      this.people = people;
-      this.people$.next(this.people);
+    this.addPerson({
+      name: 'Heman',
+      time: 0,
+      seconds: 0,
+      jobs: []
     });
+
+    this.addJob({
+      name: 'Dishes',
+      minutes: 15,
+      hours: 0,
+      complete: false
+    });
+
+    this.addJob({
+      name: 'Lawns',
+      minutes: 15,
+      hours: 0,
+      complete: false
+    });
+
+    this.addJob({
+      name: 'Room',
+      minutes: 30,
+      hours: 0,
+      complete: false
+    });
+    // storage.set('name', 'Max');
+    // this.storage.get('jobs').then((jobs) => {
+    //   this.jobs = jobs;
+    //   this.jobs$.next(this.jobs);
+    // });
+
+    // this.storage.get('people').then((people) => {
+    //   this.people = people;
+    //   this.people$.next(this.people);
+    // });
   }
 
   /***************PERSON************************/
