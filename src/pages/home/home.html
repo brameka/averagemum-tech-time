@@ -12,7 +12,13 @@
   <ion-slides pager>
     <ion-slide *ngFor="let person of people$ | async">
       <h2>{{person.name}} {{person.time | time}}</h2>
-      <button ion-button (click)="pick(person)">Add</button>
+      <button [@flip]="flipState" ion-button color="light" (click)="toggleFlip()">Flip!</button>
+
+       <button [@flyInOut]="flyInOutState" ion-button color="light" (click)="toggleFlyInOut()">Fly Out!</button>
+
+       <button [@fade]="fadeState" ion-button color="light" (click)="toggleFade()">Fade!</button>
+
+       <button [@bounce]="bounceState" ion-button color="light" (click)="toggleBounce()">Bounce!</button>
       <ion-list>
           <button ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
               {{job.name}}: {{job.hours}}:{{job.minutes}}

@@ -21,6 +21,8 @@ import { DataService } from '../services/data.service';
 import { ActivePipe } from '../pipes/active.pipe';
 import { TimePipe } from '../pipes/time.pipe';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -37,6 +39,7 @@ import { TimePipe } from '../pipes/time.pipe';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
