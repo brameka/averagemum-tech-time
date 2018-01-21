@@ -15,43 +15,40 @@
   <ion-slides pager>
     <ion-slide *ngFor="let person of people$ | async">
       <!--<timer #countdownTimer [timeInSeconds]="person.seconds"></timer>-->
-      <div class="app-profile">
-        <div class="app-profile__container">
-          <div class="app-profile__avatar">
-            <img src="assets/imgs/avatar.png" />
+      <div class="app-tracker">
+        <div class="app-profile">
+          <div class="app-profile__container">
+            <div class="app-profile__avatar">
+              <img src="assets/imgs/avatar.png" />
+            </div>
+            <div class="app-profile__content">
+              <span>{{person.name}}</span>
+            </div>
+            <!--<button class="app-profile__content--time" ion-button>
+              <ion-icon class="app-profile__content--play" name="md-time"></ion-icon> Start
+            </button>-->
           </div>
-          <div class="app-profile__content">
-            <span>{{person.name}}</span>
+          <div class="app-profile__hero">
+            01:15:00
           </div>
-          <button class="app-profile__content--time" ion-button>
-            <ion-icon class="app-profile__content--play" name="md-play"></ion-icon> 30 Mins
-          </button>
+
         </div>
+        <ion-list class="app-item-list">
+            <button class="app-item app-item__active" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
+                <span class="app-item__check">
+                  <ion-icon class="app-item__check--active" name="md-checkmark-circle"></ion-icon> 
+                </span>
+                {{job.name}}
+                <span class="app-item__time">
+                  {{job.hours}}:{{job.minutes}}
+                </span>
+            </button>
+            <button class="app-add-item" ion-item (click)="pick(person)">
+              <ion-icon name="md-add"></ion-icon> Add Tasks
+            </button>
+        </ion-list>
+        
       </div>
-      <!--<h2>{{person.name}} {{person.time | time}}</h2>-->
-      <!--<button ion-button color="light" (click)="pick(person)">Add</button>
-      <button [@flip]="flipState" ion-button color="light" (click)="toggleFlip()">Flip!</button>
-       <button [@flyInOut]="flyInOutState" ion-button color="light" (click)="toggleFlyInOut()">Fly Out!</button>
-       <button [@fade]="fadeState" ion-button color="light" (click)="toggleFade()">Fade!</button>
-       <button [@bounce]="bounceState" ion-button color="light" (click)="toggleBounce()">Bounce!</button>-->
-      <ion-list class="app-item-list">
-          <button class="app-item app-item__active" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
-              <span class="app-item__check">
-                <ion-icon class="app-item__check--inactive" name="md-checkmark-circle"></ion-icon> 
-              </span>
-                
-              {{job.name}}
-
-              <span class="app-item__time">
-                {{job.hours}}:{{job.minutes}}
-              </span>
-              <!--<div class="app-item__coin" *ngIf="job.animate" [@coin]="coinState">Coin</div>-->
-          </button>
-          <button class="app-add-item" ion-item (click)="pick(person)">
-            <ion-icon name="md-add"></ion-icon> Add Tasks
-          </button>
-      </ion-list>
-
     </ion-slide>
   </ion-slides>
 

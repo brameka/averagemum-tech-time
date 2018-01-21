@@ -54,6 +54,43 @@ export class DataService {
       hours: 0,
       complete: false
     });
+
+    this.addJob({
+      name: 'Lounge',
+      minutes: 30,
+      hours: 0,
+      complete: false
+    });
+
+    this.addJob({
+      name: 'Outdoors',
+      minutes: 30,
+      hours: 0,
+      complete: false
+    });
+
+    this.addJob({
+      name: 'Milk the cows',
+      minutes: 30,
+      hours: 0,
+      complete: false
+    });
+
+    this.addJob({
+      name: 'Sweep',
+      minutes: 30,
+      hours: 0,
+      complete: false
+    });
+
+    this.addJob({
+      name: 'Rubbish',
+      minutes: 30,
+      hours: 0,
+      complete: false
+    });
+
+    console.log('load.....');
     // storage.set('name', 'Max');
     // this.storage.get('jobs').then((jobs) => {
     //   this.jobs = jobs;
