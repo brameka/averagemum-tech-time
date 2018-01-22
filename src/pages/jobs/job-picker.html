@@ -1,6 +1,6 @@
-<ion-header>
-    <ion-navbar>
-        <ion-title>Jobs</ion-title>
+<ion-header class="app-task-picker__header">
+    <ion-navbar color="primary">
+        <ion-title>Add Tasks</ion-title>
         <ion-buttons end>
         <button ion-button clear (click)="close()">Done</button>
         </ion-buttons>
@@ -8,8 +8,14 @@
 </ion-header>
 <ion-content>
     <ion-list>
-        <button ion-item *ngFor="let job of person.jobs" (click)="select(job)">
-            <ion-icon *ngIf="job.active" name="md-checkmark-circle"></ion-icon> {{job.name}}: {{job.hours}}:{{job.minutes}}
+        <button ion-item class="app-task-picker__item" *ngFor="let job of person.jobs" (click)="select(job)">
+            <ion-icon item-start class="app-task-picker__icon--active" *ngIf="job.active" name="md-checkmark-circle"></ion-icon> 
+            <span *ngIf="job.active" class="app-task-picker__item--active" item-start>{{job.name}}</span>
+            <span *ngIf="job.active" class="app-task-picker__item--active" item-end>{{job.hours}}:{{job.minutes}}</span>
+            
+            <ion-icon item-start class="app-task-picker__icon--inactive" *ngIf="job.active === false" name="md-checkmark-circle"></ion-icon> 
+            <span *ngIf="job.active === false" class="app-task-picker__item--inactive" item-start>{{job.name}}</span>
+            <span *ngIf="job.active === false" class="app-task-picker__item--inactive" item-end>{{job.hours}}:{{job.minutes}}</span>
         </button>
     </ion-list>
 </ion-content>

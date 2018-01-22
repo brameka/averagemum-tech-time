@@ -1,10 +1,14 @@
-<ion-header>
-    <ion-navbar>
+<ion-header color="primary" class="app-task__header">
+    <ion-navbar color="primary">
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>People</ion-title>
+      <ion-title>Tasks</ion-title>
       <ion-buttons end>
+        <button *ngIf="isEdit === false" ion-button icon-only (click)="present()">
+          <ion-icon name="md-add"></ion-icon>
+        </button>
+
         <button *ngIf="isEdit === false" ion-button icon-only (click)="more()">
           <ion-icon name="more"></ion-icon>
         </button>
@@ -14,16 +18,17 @@
   </ion-header>
 
   <ion-content>
-    <button ion-button (click)="present()">Add</button>
-    <button ion-button (click)="delete()">Delete</button>
     <ion-list>
 
-      <ion-item *ngFor="let job of service.jobs$ | async">
-          <button ion-button icon-only *ngIf="isEdit" (click)="remove(job)">
-            <ion-icon name="home"></ion-icon>
-          </button>
-          {{job.name}}, {{job.hours}}:{{job.minutes}}
-      </ion-item>
+      <button ion-item class="app-task__item" *ngFor="let job of service.jobs$ | async">
+          <ion-icon class="app-task__trash" *ngIf="isEdit" name="trash"></ion-icon>
+          {{job.name}}
+
+          <span item-end>
+            {{job.hours}}:{{job.minutes}}
+          </span>
+
+      </button>
 
     </ion-list>
   </ion-content>

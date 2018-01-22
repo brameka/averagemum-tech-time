@@ -27,8 +27,10 @@ export class JobsPage {
       cssClass: 'create-job-pop'
     });
     pop.onWillDismiss(job => {
-      this.add(job);
-    })
+      if(job) {
+        this.add(job);
+      }
+    });
     pop.present();
   }
 
@@ -47,7 +49,7 @@ export class JobsPage {
 
   showSuccess() {
     let toast = this.toastController.create({
-      message: 'Person Created',
+      message: 'Task Created',
       duration: 2000
     });
     toast.present();
@@ -59,15 +61,9 @@ export class JobsPage {
 
   more() {
     let actionSheet = this.actionController.create({
-      title: 'Modify your album',
+      title: 'Actions',
       buttons: [
         {
-          text: 'Destructive',
-          role: 'destructive',
-          handler: () => {
-            console.log('Destructive clicked');
-          }
-        },{
           text: 'Edit',
           handler: () => {
             this.isEdit = true;

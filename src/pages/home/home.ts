@@ -1,68 +1,22 @@
-import { Component, OnDestroy } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/animations'
-import { NavController, ModalController } from 'ionic-angular';
+import { Component, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { NavController, ModalController, ActionSheetController, Slides} from 'ionic-angular';
 import { DataService } from '../../services/data.service';
 import { Observable } from 'rxjs/Observable';
 import { JobPicker } from '../jobs/job-picker';
+
+import { PeoplePage } from '../people/people';
+import { JobsPage } from '../jobs/jobs';
+
 import _ from 'lodash';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  animations: [
-
-    trigger('coin', [
-      state('boost', style({
-        transform: 'translate3d(0, -150%, 0)'
-      })),
-      transition('* => boost', animate('400ms ease'))
-    ]),
-
-       trigger('flip', [
-         state('flipped', style({
-           transform: 'rotate(180deg)',
-           backgroundColor: '#f50e80'
-         })),
-         transition('* => flipped', animate('400ms ease'))
-       ]),
-
-       trigger('flyInOut', [
-         state('in', style({
-           transform: 'translate3d(0, 0, 0)'
-         })),
-         state('out', style({
-           transform: 'translate3d(150%, 0, 0)'
-         })),
-         transition('in => out', animate('200ms ease-in')),
-         transition('out => in', animate('200ms ease-out'))
-       ]),
-
-       trigger('fade', [
-         state('visible', style({
-           opacity: 1
-         })),
-         state('invisible', style({
-           opacity: 0.1
-         })),
-         transition('visible <=> invisible', animate('200ms linear'))
-       ]),
-
-       trigger('bounce', [
-         state('bouncing', style({
-           transform: 'translate3d(0,0,0)'
-         })),
-         transition('* => bouncing', [
-           animate('300ms ease-in', keyframes([
-             style({transform: 'translate3d(0,0,0)', offset: 0}),
-             style({transform: 'translate3d(0,-10px,0)', offset: 0.5}),
-             style({transform: 'translate3d(0,0,0)', offset: 1})
-           ]))
-         ])
-       ])
-
-     ]
+  templateUrl: 'home.html'
 })
-export class HomePage implements OnDestroy {
+export class HomePage implements OnDestroy, AfterViewInit {
+  @ViewChild(Slides) slides: Slides;
+  slideIndex: number = 0;
+
   flipState: String = 'notFlipped';
   flyInOutState: String = 'in';
   fadeState: String = 'visible';
@@ -73,17 +27,24 @@ export class HomePage implements OnDestroy {
   jobs$: Observable<any[]>;
 
   jobs: any[] = [];
+  people: any[] = [];
 
   subscription: any;
+  peopleSubscription: any;
 
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
+    private actionController: ActionSheetController,
     private service: DataService
   ) {
 
     this.people$ = service.people$;
     this.jobs$ = service.jobs$;
+
+    this.subscription = this.people$.subscribe(people => {
+      this.people = people;
+    });
 
     this.subscription = this.jobs$.subscribe(x => {
       const self = this;
@@ -128,46 +89,71 @@ export class HomePage implements OnDestroy {
 
   complete(person, job) {
     job.animate = true;
-    //this.coinState = 'boost';
-
-        // setInterval(() => {
-        //   this.flyInOutState = 'in';
-        // }, 2000);
-
-    console.log('complete: ', job);
     job.complete = !job.complete;
     let minutes: number = +job.minutes + (+job.hours * 60);
     let seconds: number = minutes * 60;
-    console.log('complete minutes: ', minutes);
-
     person.time += minutes;
     person.seconds += seconds;
-    console.log('complete seconds: ', person.seconds);
+  }
+
+  ngAfterViewInit() {
+    console.log('slides: ', this.slides);
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  toggleFlip(){
-    this.flipState = (this.flipState == 'notFlipped') ? 'flipped' : 'notFlipped';
+  navPeople() {
+    this.navCtrl.push(PeoplePage);
   }
 
-  toggleFlyInOut(){
-
-    this.flyInOutState = 'out';
-
-    setInterval(() => {
-      this.flyInOutState = 'in';
-    }, 2000);
-
+  navTasks() {
+    this.navCtrl.push(JobsPage);
   }
 
-  toggleFade() {
-    this.fadeState = (this.fadeState == 'visible') ? 'invisible' : 'visible';
+  more() {
+    let actionSheet = this.actionController.create({
+      buttons: [
+        {
+          icon: 'people',
+          text: 'Profiles',
+          handler: () => {
+            this.navPeople();
+          }
+        },{
+          icon: 'clipboard',
+          text: 'Tasks',
+          handler: () => {
+            this.navTasks();
+          }
+        },{
+          icon: 'refresh',
+          text: 'Reset',
+          handler: () => {
+            this.reset();
+          }
+        },{
+          icon: 'close',
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
-  toggleBounce(){
-    this.bounceState = (this.bounceState == 'noBounce') ? 'bouncing' : 'noBounce';
+  reset() {
+    const person = this.people[this.slideIndex];
+    person.jobs = [];
+    person.time = 0;
+    person.seconds = 0;
+  }
+
+  slideChanged() {
+    this.slideIndex = this.slides.getActiveIndex();
+    console.log('Current index is', this.slideIndex);
   }
 }

@@ -1,68 +1,77 @@
-<!--<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>-->
+<ion-header color="primary" class="app-task__header">
+    <ion-navbar color="primary">
+      <!--<button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>-->
+      <ion-title>Technology Time</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="more()">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
 
 <ion-content class="app-dash">
 
   
 
 
-  <ion-slides pager>
-    <ion-slide *ngFor="let person of people$ | async">
-      <!--<timer #countdownTimer [timeInSeconds]="person.seconds"></timer>-->
-      <div class="app-tracker">
-        <div class="app-profile">
-          <div class="app-profile__container">
-            <div class="app-profile__avatar">
-              <img src="assets/imgs/avatar.png" />
-            </div>
-            <div class="app-profile__content">
-              <span>{{person.name}}</span>
-            </div>
-            <!--<button class="app-profile__content--time" ion-button>
-              <ion-icon class="app-profile__content--play" name="md-time"></ion-icon> Start
-            </button>-->
-          </div>
-          <div class="app-profile__hero">
-            01:15:00
-          </div>
+  <ion-slides #slides pager (ionSlideDidChange)="slideChanged()">
+    <ion-slide *ngFor="let person of people">
 
-        </div>
+      <!--<div class="app-dash__task-container">
+
+        <button class="app-dash__action" ion-button (click)="navPeople()">
+          <ion-icon class="app-dash__people--icon" name="md-people"></ion-icon> 3 Profiles
+        </button>
+
+        <button class="app-dash__action--people app-dash__action" ion-button (click)="navTasks()">
+          <ion-icon class="app-dash__people--icon" name="md-clipboard"></ion-icon> 14 Tasks
+        </button>
+
+        <button class="app-dash__action--reset app-dash__action" ion-button (click)="navTasks()">
+          <ion-icon class="app-dash__people--icon" name="md-refresh"></ion-icon> Reset
+        </button>
+
+      </div>-->
+      
+      
+      <div class="app-tracker">
+
+        <timer #countdownTimer [person]="person" [timeInSeconds]="person.seconds"></timer>
+
         <ion-list class="app-item-list">
-            <button class="app-item app-item__active" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
-                <span class="app-item__check">
-                  <ion-icon class="app-item__check--active" name="md-checkmark-circle"></ion-icon> 
+            
+            <button [class.app-item__active]="job.complete" class="app-item" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
+                <span class="app-item__check" *ngIf="job.complete">
+                  <ion-icon class="app-item__check--active" name="md-checkmark-circle"></ion-icon>
+                  <!--<ion-icon *ngIf="job.complete === false" class="app-item__check--inactive" name="md-checkmark-circle"></ion-icon> -->
                 </span>
                 {{job.name}}
                 <span class="app-item__time">
                   {{job.hours}}:{{job.minutes}}
                 </span>
             </button>
+
             <button class="app-add-item" ion-item (click)="pick(person)">
               <ion-icon name="md-add"></ion-icon> Add Tasks
             </button>
+            <!--<button class="app-add-item app-refresh-item" ion-item (click)="pick(person)">
+              <ion-icon name="md-refresh"></ion-icon> Reset
+            </button>-->
         </ion-list>
-        
       </div>
     </ion-slide>
   </ion-slides>
 
-  <div class="app-dash__task-container">
+  <!--<div class="app-dash__task-container">
 
-    <button class="app-dash__people" ion-button>
-      <ion-icon class="app-dash__people--icon" name="md-people"></ion-icon> 3 Profiles
+    <button class="app-dash__action--people app-dash__action" ion-button icon-only clear (click)="navTasks()">
+      <ion-icon class="app-dash__people--icon" name="md-more"></ion-icon>
     </button>
 
-    <button class="app-dash__people" ion-button>
-      <ion-icon class="app-dash__people--icon" name="md-clipboard"></ion-icon> 14 Tasks
-    </button>
-
-  </div>
+  </div>-->
 
 </ion-content>
 

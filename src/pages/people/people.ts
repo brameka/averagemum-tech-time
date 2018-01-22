@@ -30,8 +30,11 @@ export class PeoplePage {
       cssClass: 'create-people-pop'
     });
     pop.onWillDismiss(x => {
-      this.add(x.name);
-    })
+      if(x) {
+        console.log('shouldt add...x: ', x);
+        this.add(x.name);
+      }
+    });
     pop.present();
   }
 
@@ -67,15 +70,9 @@ export class PeoplePage {
 
   more() {
     let actionSheet = this.actionController.create({
-      title: 'Modify your album',
+      title: 'Actions',
       buttons: [
         {
-          text: 'Destructive',
-          role: 'destructive',
-          handler: () => {
-            console.log('Destructive clicked');
-          }
-        },{
           text: 'Edit',
           handler: () => {
             this.isEdit = true;

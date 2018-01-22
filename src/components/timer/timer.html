@@ -1,4 +1,39 @@
-<ion-card *ngIf="timer">
+<div class="app-profile">
+    <div class="app-profile__container">
+        <div class="app-profile__avatar">
+            <img src="assets/imgs/avatar.png" />
+        </div>
+        <div class="app-profile__content">
+            <span>{{person.name}}</span>
+        </div>
+        <button clear class="app-profile__content--time" ion-button (click)="startTimer()" *ngIf="!timer.hasStarted">
+            <ion-icon class="app-profile__content--play" name="md-play"></ion-icon> Start
+        </button>
+        <button clear class="app-profile__content--time" ion-button (click)="pauseTimer()" *ngIf="timer.runTimer && timer.hasStarted && !timer.hasFinished">
+            <ion-icon class="app-profile__content--play" name="md-pause"></ion-icon> Pause
+        </button>
+
+        <button clear class="app-profile__content--time" ion-button (click)="resumeTimer()" *ngIf="!timer.runTimer && timer.hasStarted && !timer.hasFinished">
+            <ion-icon class="app-profile__content--play" name="md-play"></ion-icon> Start
+        </button>
+    </div>
+    <div class="app-profile__hero">
+        <div class="app-timer">
+            <button class="app-timer__min" ion-button icon-only clear (click)="min()" *ngIf="!timer.runTimer && timeInSeconds > 0" [disabled]="timeInSeconds == 0">
+                <ion-icon name="md-remove"></ion-icon>
+            </button>
+            <span class="app-timer__time" *ngIf="timeInSeconds && timeInSeconds > 0">{{timer.displayTime}}</span>
+            <span class="app-timer__time" *ngIf="!timeInSeconds || timeInSeconds == 0">0 Mins</span>
+            <button class="app-timer__min" ion-button icon-only clear (click)="add()" *ngIf="!timer.runTimer && timeInSeconds > 0">
+                <ion-icon name="md-add"></ion-icon>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<!--<ion-card *ngIf="timer">
     <ion-card-header>
       <button ion-button *ngIf="timeInSeconds && timeInSeconds > 0" large block clear class="timer-button x-large">{{timer.displayTime}}</button>
       <button ion-button *ngIf="!timeInSeconds || timeInSeconds == 0" large block clear class="timer-button">No Technology Time</button>
@@ -21,4 +56,4 @@
               Start
           </button>
     </ion-item>
-  </ion-card>
+  </ion-card>-->

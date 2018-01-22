@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { TimerObservable } from "rxjs/observable/TimerObservable";
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { Subject } from 'rxjs/Subject';
 
 export interface CountdownTimer {
   seconds: number;
@@ -15,8 +16,9 @@ export interface CountdownTimer {
   templateUrl: 'timer.html'
 })
 export class Timer implements OnChanges {
-
+  @Input() person: any;
   @Input() timeInSeconds: number;
+
   timer: CountdownTimer;
 
   ngOnInit() {
@@ -84,6 +86,21 @@ export class Timer implements OnChanges {
     minutesString = (minutes < 10) ? '0' + minutes : minutes.toString();
     secondsString = (seconds < 10) ? '0' + seconds : seconds.toString();
     return hoursString + ':' + minutesString + ':' + secondsString;
+  }
+
+  min() {
+    const min = 15 * 60;
+    if(this.timer.secondsRemaining < min) {
+      this.timer.secondsRemaining = 0;
+    } else {
+      this.timer.secondsRemaining -= (15 * 60);
+    }
+    this.timer.displayTime = this.getSecondsAsDigitalClock(this.timer.secondsRemaining);
+  }
+
+  add() {
+    this.timer.secondsRemaining += (15 * 60);
+    this.timer.displayTime = this.getSecondsAsDigitalClock(this.timer.secondsRemaining);
   }
 
 }

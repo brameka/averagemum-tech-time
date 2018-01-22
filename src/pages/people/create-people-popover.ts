@@ -1,32 +1,44 @@
 import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
+import { Validators, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'popover-create-people',
   template: `
   <ion-content>
-    <div class="create-people">
-      <ion-item>
-        <ion-label fixed>Name</ion-label>
-        <ion-input type="text" [(ngModel)]="name"></ion-input>
-      </ion-item>
-    </div>
-    <button ion-button color="secondary" (click)="cancel()">Cancel</button>
-    <button ion-button (click)="save()">Save</button>
+    <form [formGroup]="form">
+      <div class="create-people">
+        <ion-item>
+          <ion-input placeholder="Name" type="text" formControlName="name"></ion-input>
+        </ion-item>
+      </div>
+      <div class="app-create-people__tasks">
+        <button ion-button clear color="primary" (click)="cancel()">Cancel</button>
+        <button ion-button (click)="save()">Save</button>
+      </div>
+    </form>
   </ion-content>
   `
 })
 export class CreatePeoplePopover {
   name: string;
-  avatar: string;
+  form: FormGroup;
 
-  constructor(public viewController: ViewController) { }
+  constructor(
+    public viewController: ViewController,
+    private formBuilder: FormBuilder
+  ) { 
+    this.form = formBuilder.group({
+        name: ['', Validators.required]
+    });
+  }
 
   save() {
-    this.viewController.dismiss({
-      name: this.name,
-      avatar: this.avatar
-    });
+    if(this.form.valid) {
+      this.viewController.dismiss({
+        name: this.form.controls['name'].value
+      });
+    }
   }
 
   cancel() {

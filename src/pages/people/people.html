@@ -1,10 +1,13 @@
-<ion-header>
-  <ion-navbar>
+<ion-header class="app-people__header">
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>People</ion-title>
+    <ion-title>Profiles</ion-title>
     <ion-buttons end>
+      <button *ngIf="isEdit === false" ion-button icon-only (click)="present()">
+        <ion-icon name="md-add"></ion-icon>
+      </button>
       <button *ngIf="isEdit === false" ion-button icon-only (click)="more()">
         <ion-icon name="more"></ion-icon>
       </button>
@@ -14,16 +17,11 @@
 </ion-header>
 
 <ion-content>
-  <button ion-button (click)="present()">Add</button>
-  <button ion-button (click)="delete()">Delete</button>
   <ion-list>
 
-    <ion-item *ngFor="let person of service.people$ | async">
-        <button ion-button icon-only *ngIf="isEdit" (click)="remove(person)">
-          <ion-icon name="home"></ion-icon>
-        </button>
-        {{person.name}}
-    </ion-item>
+    <button ion-item class="app-people__item" *ngFor="let person of service.people$ | async">
+        <ion-icon class="app-people__trash" *ngIf="isEdit" name="trash"></ion-icon> {{person.name}}
+    </button>
 
   </ion-list>
 </ion-content>
