@@ -146,10 +146,12 @@ export class HomePage implements OnDestroy, AfterViewInit {
   }
 
   reset() {
-    const person = this.people[this.slideIndex];
-    person.jobs = [];
-    person.time = 0;
-    person.seconds = 0;
+    if(this.people && this.people.length > 0) {
+      const person = this.people[this.slideIndex];
+      person.jobs = [];
+      person.time = 0;
+      person.seconds = 0;
+    }
   }
 
   slideChanged() {

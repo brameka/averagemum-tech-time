@@ -1,4 +1,4 @@
-<ion-header color="primary" class="app-task__header">
+<ion-header *ngIf="people.length > 0 || jobs.length > 0" color="primary" class="app-task__header">
     <ion-navbar color="primary">
       <!--<button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -14,39 +14,28 @@
 
 <ion-content class="app-dash">
 
-  
+  <button *ngIf="people.length == 0" ion-button icon-left>
+     <ion-icon name="md-people"></ion-icon>
+     Profiles
+  </button>
+
+  <button *ngIf="jobs.length == 0" ion-button icon-left>
+     <ion-icon name="md-clipboard"></ion-icon>
+     Tasks
+  </button>
 
 
-  <ion-slides #slides pager (ionSlideDidChange)="slideChanged()">
+
+  <ion-slides *ngIf="people.length > 0 || jobs.length > 0" #slides pager (ionSlideDidChange)="slideChanged()">
     <ion-slide *ngFor="let person of people">
 
-      <!--<div class="app-dash__task-container">
-
-        <button class="app-dash__action" ion-button (click)="navPeople()">
-          <ion-icon class="app-dash__people--icon" name="md-people"></ion-icon> 3 Profiles
-        </button>
-
-        <button class="app-dash__action--people app-dash__action" ion-button (click)="navTasks()">
-          <ion-icon class="app-dash__people--icon" name="md-clipboard"></ion-icon> 14 Tasks
-        </button>
-
-        <button class="app-dash__action--reset app-dash__action" ion-button (click)="navTasks()">
-          <ion-icon class="app-dash__people--icon" name="md-refresh"></ion-icon> Reset
-        </button>
-
-      </div>-->
-      
-      
       <div class="app-tracker">
-
         <timer #countdownTimer [person]="person" [timeInSeconds]="person.seconds"></timer>
-
         <ion-list class="app-item-list">
             
             <button [class.app-item__active]="job.complete" class="app-item" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
                 <span class="app-item__check" *ngIf="job.complete">
                   <ion-icon class="app-item__check--active" name="md-checkmark-circle"></ion-icon>
-                  <!--<ion-icon *ngIf="job.complete === false" class="app-item__check--inactive" name="md-checkmark-circle"></ion-icon> -->
                 </span>
                 {{job.name}}
                 <span class="app-item__time">
@@ -57,21 +46,12 @@
             <button class="app-add-item" ion-item (click)="pick(person)">
               <ion-icon name="md-add"></ion-icon> Add Tasks
             </button>
-            <!--<button class="app-add-item app-refresh-item" ion-item (click)="pick(person)">
-              <ion-icon name="md-refresh"></ion-icon> Reset
-            </button>-->
+           
         </ion-list>
       </div>
     </ion-slide>
   </ion-slides>
 
-  <!--<div class="app-dash__task-container">
-
-    <button class="app-dash__action--people app-dash__action" ion-button icon-only clear (click)="navTasks()">
-      <ion-icon class="app-dash__people--icon" name="md-more"></ion-icon>
-    </button>
-
-  </div>-->
 
 </ion-content>
 

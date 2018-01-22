@@ -20,75 +20,75 @@ export class DataService {
   }
 
   load() {
-    this.addPerson({
-      name: 'Hulk',
-      time: 0,
-      seconds: 0,
-      jobs: []
-    });
+    // this.addPerson({
+    //   name: 'Hulk',
+    //   time: 0,
+    //   seconds: 0,
+    //   jobs: []
+    // });
 
-    this.addPerson({
-      name: 'Heman',
-      time: 0,
-      seconds: 0,
-      jobs: []
-    });
+    // this.addPerson({
+    //   name: 'Heman',
+    //   time: 0,
+    //   seconds: 0,
+    //   jobs: []
+    // });
 
-    this.addJob({
-      name: 'Dishes',
-      minutes: 15,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Dishes',
+    //   minutes: 15,
+    //   hours: 0,
+    //   complete: false
+    // });
 
-    this.addJob({
-      name: 'Lawns',
-      minutes: 15,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Lawns',
+    //   minutes: 15,
+    //   hours: 0,
+    //   complete: false
+    // });
 
-    this.addJob({
-      name: 'Room',
-      minutes: 30,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Room',
+    //   minutes: 30,
+    //   hours: 0,
+    //   complete: false
+    // });
 
-    this.addJob({
-      name: 'Lounge',
-      minutes: 30,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Lounge',
+    //   minutes: 30,
+    //   hours: 0,
+    //   complete: false
+    // });
 
-    this.addJob({
-      name: 'Outdoors',
-      minutes: 30,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Outdoors',
+    //   minutes: 30,
+    //   hours: 0,
+    //   complete: false
+    // });
 
-    this.addJob({
-      name: 'Milk the cows',
-      minutes: 30,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Milk the cows',
+    //   minutes: 30,
+    //   hours: 0,
+    //   complete: false
+    // });
 
-    this.addJob({
-      name: 'Sweep',
-      minutes: 30,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Sweep',
+    //   minutes: 30,
+    //   hours: 0,
+    //   complete: false
+    // });
 
-    this.addJob({
-      name: 'Rubbish',
-      minutes: 30,
-      hours: 0,
-      complete: false
-    });
+    // this.addJob({
+    //   name: 'Rubbish',
+    //   minutes: 30,
+    //   hours: 0,
+    //   complete: false
+    // });
 
     console.log('load.....');
     // storage.set('name', 'Max');
