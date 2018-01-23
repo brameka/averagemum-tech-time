@@ -158,4 +158,12 @@ export class HomePage implements OnDestroy, AfterViewInit {
     this.slideIndex = this.slides.getActiveIndex();
     console.log('Current index is', this.slideIndex);
   }
+
+  onboardProfiles() {
+
+  }
+
+  onboardTasks() {
+
+  }
 }

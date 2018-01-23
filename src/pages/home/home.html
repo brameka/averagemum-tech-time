@@ -1,8 +1,5 @@
 <ion-header *ngIf="people.length > 0 || jobs.length > 0" color="primary" class="app-task__header">
     <ion-navbar color="primary">
-      <!--<button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>-->
       <ion-title>Technology Time</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="more()">
@@ -14,17 +11,21 @@
 
 <ion-content class="app-dash">
 
-  <button *ngIf="people.length == 0" ion-button icon-left>
-     <ion-icon name="md-people"></ion-icon>
-     Profiles
-  </button>
-
-  <button *ngIf="jobs.length == 0" ion-button icon-left>
-     <ion-icon name="md-clipboard"></ion-icon>
-     Tasks
-  </button>
-
-
+  <div class="app-onboard">
+    <div class="app-onboard__profiles">
+      <h2>Add Some Profiles</h2>
+      <button *ngIf="people.length == 0" ion-button icon-left>
+        <ion-icon name="md-people"></ion-icon>
+        Profiles
+      </button>
+    </div>
+    <div class="app-onboard__tasks" *ngIf="jobs.length == 0 && people.length > 0">
+        <button ion-button icon-left>
+          <ion-icon name="md-clipboard"></ion-icon>
+          Tasks
+        </button>
+    </div>
+  </div>
 
   <ion-slides *ngIf="people.length > 0 || jobs.length > 0" #slides pager (ionSlideDidChange)="slideChanged()">
     <ion-slide *ngFor="let person of people">
@@ -32,7 +33,7 @@
       <div class="app-tracker">
         <timer #countdownTimer [person]="person" [timeInSeconds]="person.seconds"></timer>
         <ion-list class="app-item-list">
-            
+
             <button [class.app-item__active]="job.complete" class="app-item" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
                 <span class="app-item__check" *ngIf="job.complete">
                   <ion-icon class="app-item__check--active" name="md-checkmark-circle"></ion-icon>
@@ -46,7 +47,7 @@
             <button class="app-add-item" ion-item (click)="pick(person)">
               <ion-icon name="md-add"></ion-icon> Add Tasks
             </button>
-           
+
         </ion-list>
       </div>
     </ion-slide>
