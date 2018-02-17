@@ -9,6 +9,9 @@ import { PeoplePage } from '../pages/people/people';
 import { JobsPage } from '../pages/jobs/jobs';
 import { DataService } from '../services/data.service';
 
+import { OnboardPage } from '../pages/onboard/onboard';
+import { Storage } from '@ionic/storage';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,28 +22,61 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
+  tasks: any[] = [];
+  profiles: any[] = [];
+
   constructor(
               public platform: Platform,
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,
-              public service: DataService
+              public service: DataService,
+              public storage: Storage
             ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'People', component: PeoplePage },
-      { title: 'Jobs', component: JobsPage },
-      { title: 'List', component: ListPage }
+      
     ];
 
+    this.reset();
+
+    this.service.people$.subscribe(x => {
+      this.profiles = x;
+      this.setRoot();
+    });
+
+    this.service.jobs$.subscribe(x => {
+      this.tasks = x;
+      this.setRoot();
+    });
+
+
+  }
+
+  setRoot() {
+    if(this.tasks.length > 0 && this.profiles.length > 0) {
+      this.rootPage = HomePage;
+    } else {
+      this.rootPage = OnboardPage;
+    }
+  }
+
+  reset() {
+    this.storage.set('onboard', false);
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      if (this.platform.is('ios')) {
+        this.service.setPlatform('ios');
+      } else {
+        this.service.setPlatform('android');
+      }
+
     });
   }
 

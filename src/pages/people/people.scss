@@ -9,6 +9,11 @@
     }
 
     &__trash {
+        color: #ff0000;
+    }
+
+    &__trash-text {
+        color: #ff0000;
     }
 }
 
@@ -17,5 +22,15 @@
     padding: 5px;
     text-align: right;
     margin-top: 10px;
+}
+
+.app-empty {
+    color: #581eca;
+    text-align: center;
+    margin-top: 30vh;
+
+    h2 {
+      font-size: 1.4rem;
+    }
 }
 

@@ -8,6 +8,8 @@ export class DataService {
   people = [];
   jobs = [];
   session = [];
+  platform = 'ios';
+  platform$: BehaviorSubject<string>;
   people$: BehaviorSubject<any[]>;
   jobs$: BehaviorSubject<any[]>;
   session$: BehaviorSubject<any[]>;
@@ -16,10 +18,18 @@ export class DataService {
     this.jobs$ = new BehaviorSubject<any[]>([]);
     this.people$ = new BehaviorSubject<any[]>([]);
     this.session$ = new BehaviorSubject<any[]>([]);
+    this.platform$ = new BehaviorSubject<string>(this.platform);
+    // this.reset();
     this.load();
   }
 
+  reset() {
+    this.storage.set('profiles', []);
+    this.storage.set('tasks', []);
+  }
+
   load() {
+
     // this.addPerson({
     //   name: 'Hulk',
     //   time: 0,
@@ -90,17 +100,19 @@ export class DataService {
     //   complete: false
     // });
 
-    console.log('load.....');
-    // storage.set('name', 'Max');
-    // this.storage.get('jobs').then((jobs) => {
-    //   this.jobs = jobs;
-    //   this.jobs$.next(this.jobs);
-    // });
+    this.storage.get('tasks').then((tasks) => {
+      if(tasks) {
+        this.jobs = tasks;
+        this.jobs$.next(this.jobs);
+      }
+    });
 
-    // this.storage.get('people').then((people) => {
-    //   this.people = people;
-    //   this.people$.next(this.people);
-    // });
+    this.storage.get('profiles').then((profiles) => {
+      if(profiles) {
+        this.people = profiles;
+        this.people$.next(this.people);
+      }
+    });
   }
 
   /***************PERSON************************/
@@ -108,10 +120,11 @@ export class DataService {
   addPerson(person: any) {
     this.people.push(person);
     this.people$.next(this.people);
+    this.storage.set('profiles', this.people);
   }
 
-  savePerson(person: any) {
-
+  saveProfiles() {
+    this.storage.set('profiles', this.people);
   }
 
   deletePerson(person: any) {
@@ -125,31 +138,37 @@ export class DataService {
     this.people$.next(this.people);
   }
 
-
-
-  /***************JOBS************************/
   addJob(job: any) {
     this.jobs.push(job);
     this.jobs$.next(this.jobs);
+    this.storage.set('tasks', this.jobs);
   }
 
-  saveJob(job: any) {
-
+  saveTasks() {
+    this.storage.set('tasks', this.jobs);
   }
 
-  deleteJob(job: any) {
+  deleteJob(task: any) {
+    _.remove(this.jobs, function(value) {
+        return value.name === task.name;
+    });
 
+    _.each(this.people, function(profile) {
+      const tasks: any[] = profile.jobs;
+      _.remove(tasks, function(value) {
+          return value.name === task.name;
+      });
+      profile.jobs = tasks;
+    });
+    this.jobs$.next(this.jobs);
+    this.people$.next(this.people);
+    this.saveTasks();
+    this.saveProfiles();
   }
 
-  /***************PERSON************************/
-  addJobToSession(job: any) {
-    const sessionJob = {
-      job: job,
-      user: {},
-      complete: false
-    };
-    this.session.push(sessionJob);
-    this.session$.next(this.session);
+  setPlatform(platform: string) {
+    this.platform = platform;
+    this.platform$.next(this.platform);
   }
 
 }

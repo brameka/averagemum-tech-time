@@ -1,10 +1,12 @@
-<ion-header *ngIf="people.length > 0 || jobs.length > 0" color="primary" class="app-task__header">
+<ion-header color="primary" class="app-task__header">
     <ion-navbar color="primary">
       <ion-title>Technology Time</ion-title>
       <ion-buttons end>
-        <button ion-button icon-only (click)="more()">
+        
+        <button *ngIf="people.length > 0 && jobs.length > 0" ion-button icon-only (click)="more()">
           <ion-icon name="more"></ion-icon>
         </button>
+
       </ion-buttons>
     </ion-navbar>
   </ion-header>
@@ -12,14 +14,15 @@
 <ion-content class="app-dash">
 
   <div class="app-onboard">
-    <div class="app-onboard__profiles">
-      <h2>Add Some Profiles</h2>
-      <button *ngIf="people.length == 0" ion-button icon-left>
+    <div class="app-onboard__profiles" *ngIf="people.length == 0">
+      <h2>Ok, Add Some Profiles</h2>
+      <button ion-button icon-left (click)="onboardProfiles()">
         <ion-icon name="md-people"></ion-icon>
         Profiles
       </button>
     </div>
-    <div class="app-onboard__tasks" *ngIf="jobs.length == 0 && people.length > 0">
+    <div class="app-onboard__tasks" *ngIf="jobs.length == 0 && people.length > 0" (click)="onboardTasks()">
+        <h2>Now, Add Some Tasks</h2>
         <button ion-button icon-left>
           <ion-icon name="md-clipboard"></ion-icon>
           Tasks
@@ -27,32 +30,31 @@
     </div>
   </div>
 
-  <ion-slides *ngIf="people.length > 0 || jobs.length > 0" #slides pager (ionSlideDidChange)="slideChanged()">
-    <ion-slide *ngFor="let person of people">
+  <ion-slides *ngIf="people.length > 0 && jobs.length > 0" #slides pager (ionSlideDidChange)="slideChanged()">
+    <ion-slide *ngFor="let person of people; let i = index">
 
       <div class="app-tracker">
-        <timer #countdownTimer [person]="person" [timeInSeconds]="person.seconds"></timer>
+        <timer (update)="reset()" #countdownTimer [platform]="service.platform$ | async" [person]="person" [timeInSeconds]="person.seconds" [id]="i + 1"></timer>
         <ion-list class="app-item-list">
 
-            <button [class.app-item__active]="job.complete" class="app-item" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
-                <span class="app-item__check" *ngIf="job.complete">
+            <button [@highlight]="job.state" (@highlight.done)="highlightComplete(job)" class="app-item" ion-item *ngFor="let job of person.jobs | active" (click)="complete(person, job)">
+                <!--<span class="app-item__check" *ngIf="job.complete">
                   <ion-icon class="app-item__check--active" name="md-checkmark-circle"></ion-icon>
-                </span>
+                </span>-->
                 {{job.name}}
-                <span class="app-item__time">
+                <span class="app-item__time" [@time]="job.timeState" (@time.done)="timeComplete(job)" item-end>
                   {{job.hours}}:{{job.minutes}}
                 </span>
             </button>
 
             <button class="app-add-item" ion-item (click)="pick(person)">
-              <ion-icon name="md-add"></ion-icon> Add Tasks
+              <ion-icon name="md-add"></ion-icon> Manage Tasks For {{person.name}}
             </button>
 
         </ion-list>
       </div>
     </ion-slide>
   </ion-slides>
-
 
 </ion-content>
 

@@ -1,33 +1,51 @@
 <ion-header color="primary" class="app-task__header">
     <ion-navbar color="primary">
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
+      
       <ion-title>Tasks</ion-title>
-      <ion-buttons end>
-        <button *ngIf="isEdit === false" ion-button icon-only (click)="present()">
-          <ion-icon name="md-add"></ion-icon>
-        </button>
 
+      <ion-buttons end *ngIf="isModal === false">
         <button *ngIf="isEdit === false" ion-button icon-only (click)="more()">
           <ion-icon name="more"></ion-icon>
         </button>
         <button *ngIf="isEdit" ion-button clear (click)="done()">Done</button>
       </ion-buttons>
+
+      <ion-buttons end *ngIf="isModal">
+        <button [disabled]="tasks.length == 0" ion-button clear (click)="close()">Done</button>
+      </ion-buttons>
+
     </ion-navbar>
   </ion-header>
 
   <ion-content>
-    <ion-list>
+    <div class="app-empty" *ngIf="tasks.length == 0">
+      <h2>Booh! No Tasks Yet</h2>
+      <button *ngIf="isModal" ion-button icon-left (click)="present()">
+        <ion-icon name="md-add"></ion-icon>
+        Add Task
+      </button>
+    </div>
 
-      <button ion-item class="app-task__item" *ngFor="let job of service.jobs$ | async">
-          <ion-icon class="app-task__trash" *ngIf="isEdit" name="trash"></ion-icon>
-          {{job.name}}
+    <ion-list *ngIf="tasks.length > 0">
 
-          <span item-end>
+      <button ion-item class="app-task__item" *ngFor="let job of service.jobs$ | async" (click)="delete(job)">
+          <ion-icon class="app-task__trash" *ngIf="isEdit" name="remove"></ion-icon>
+          <span *ngIf="isEdit" class="app-task__trash-text">{{job.name}}</span>
+          <span *ngIf="isEdit === false" class="app-task__static">{{job.name}}</span>
+
+          <span *ngIf="isEdit" class="app-task__trash-text" item-end>
             {{job.hours}}:{{job.minutes}}
           </span>
 
+          <span *ngIf="isEdit === false" class="app-task__static" item-end>
+            {{job.hours}}:{{job.minutes}}
+          </span>
+
+      </button>
+
+      <button ion-item class="app-task__item" (click)="present()">
+          <ion-icon name="md-add"></ion-icon>
+          Add Task
       </button>
 
     </ion-list>

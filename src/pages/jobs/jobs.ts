@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, PopoverController, ToastController, ActionSheetController } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
+import { ViewController, NavController, NavParams, PopoverController, ToastController, ActionSheetController } from 'ionic-angular';
 import { CreateJobPopover } from './create-job-popover';
 import { DataService } from '../../services/data.service';
 
@@ -7,9 +7,12 @@ import { DataService } from '../../services/data.service';
   selector: 'page-jobs',
   templateUrl: 'jobs.html'
 })
-export class JobsPage {
+export class JobsPage implements OnDestroy {
   selectedItem: any;
   isEdit = false;
+  isModal = false;
+  tasks: any[];
+  subscription: any;
 
   constructor(
     public navCtrl: NavController,
@@ -17,9 +20,13 @@ export class JobsPage {
     private popController: PopoverController,
     private toastController: ToastController,
     private actionController: ActionSheetController,
+    private viewController: ViewController,
     private service: DataService
   ) {
-    this.selectedItem = navParams.get('item');
+    this.isModal = navParams.get('modal');
+    this.subscription = this.service.jobs$.subscribe((tasks) => {
+      this.tasks = tasks
+    });
   }
 
   present() {
@@ -39,12 +46,10 @@ export class JobsPage {
     this.showSuccess();
   }
 
-  remove(person: any) {
-    this.service.deletePerson(person);
-  }
-
-  delete() {
-    this.service.deletePeople();
+  delete(task: any) {
+    if(this.isEdit) {
+      this.service.deleteJob(task);
+    }
   }
 
   showSuccess() {
@@ -57,6 +62,10 @@ export class JobsPage {
 
   done() {
     this.isEdit = false;
+  }
+
+  close() {
+    this.viewController.dismiss();
   }
 
   more() {
@@ -78,5 +87,9 @@ export class JobsPage {
       ]
     });
     actionSheet.present();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,8 +1,16 @@
 page-home {
   .app-onboard {
     color: #fff;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.20);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
     text-align: center;
+    margin-top: 10vh;
+    position: absolute;
+    width: 100%;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
   }
 
 
@@ -17,7 +25,7 @@ page-home {
 
   .app-tracker {
     margin-top: 10px;
-    max-height: calc(100vh - 85px);
+    max-height: calc(100vh - 10px);
     overflow: scroll;
   }
 
@@ -196,7 +204,7 @@ page-home {
 
   .app-item {
     position: relative;
-    overflow: visible;
+    // overflow: visible;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 10px;
     border: 3px solid #fff;
@@ -229,21 +237,11 @@ page-home {
     }
 
     &__time {
-      position: absolute;
-      right: 10px;
-      top: 12px;
+      // position: absolute;
+      // right: 10px;
+      // top: 12px;
       line-height: 20px;
     }
-
-
-    .input-wrapper {
-      overflow: visible;
-    }
-
-    .ion-label, ion-label {
-      overflow: visible;
-    }
-
 
   }
 

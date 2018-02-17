@@ -6,14 +6,14 @@
         <div class="app-profile__content">
             <span>{{person.name}}</span>
         </div>
-        <button clear class="app-profile__content--time" ion-button (click)="startTimer()" *ngIf="!timer.hasStarted">
+        <button clear class="app-profile__content--time" ion-button (click)="startTimer()" *ngIf="!timer.hasStarted && timeInSeconds != 0">
             <ion-icon class="app-profile__content--play" name="md-play"></ion-icon> Start
         </button>
         <button clear class="app-profile__content--time" ion-button (click)="pauseTimer()" *ngIf="timer.runTimer && timer.hasStarted && !timer.hasFinished">
             <ion-icon class="app-profile__content--play" name="md-pause"></ion-icon> Pause
         </button>
 
-        <button clear class="app-profile__content--time" ion-button (click)="resumeTimer()" *ngIf="!timer.runTimer && timer.hasStarted && !timer.hasFinished">
+        <button clear class="app-profile__content--time" ion-button (click)="resumeTimer()" *ngIf="!timer.runTimer && timer.hasStarted && !timer.hasFinished && secondsRemaining != 0">
             <ion-icon class="app-profile__content--play" name="md-play"></ion-icon> Start
         </button>
     </div>
@@ -22,8 +22,14 @@
             <button class="app-timer__min" ion-button icon-only clear (click)="min()" *ngIf="!timer.runTimer && timeInSeconds > 0" [disabled]="timeInSeconds == 0">
                 <ion-icon name="md-remove"></ion-icon>
             </button>
-            <span class="app-timer__time" *ngIf="timeInSeconds && timeInSeconds > 0">{{timer.displayTime}}</span>
-            <span class="app-timer__time" *ngIf="!timeInSeconds || timeInSeconds == 0">0 Mins</span>
+            <span class="app-timer__time" *ngIf="timeInSeconds && timeInSeconds > 0 && !timer.hasFinished">{{timer.displayTime}}</span>
+            <span class="app-timer__time" *ngIf="!timeInSeconds || timeInSeconds == 0 && !timer.hasFinished">0</span>
+            <!--<span class="app-timer__time" *ngIf="timer.hasFinished">Finished!</span>-->
+
+            <!--<button ion-button icon-left clear *ngIf="timer.hasFinished" (click)="reset()">
+                <ion-icon name="md-refresh"></ion-icon>
+                Reset
+            </button>-->
             <button class="app-timer__min" ion-button icon-only clear (click)="add()" *ngIf="!timer.runTimer && timeInSeconds > 0">
                 <ion-icon name="md-add"></ion-icon>
             </button>

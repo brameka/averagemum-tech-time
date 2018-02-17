@@ -17,5 +17,11 @@
             <span *ngIf="job.active === false" class="app-task-picker__item--inactive" item-start>{{job.name}}</span>
             <span *ngIf="job.active === false" class="app-task-picker__item--inactive" item-end>{{job.hours}}:{{job.minutes}}</span>
         </button>
+        <button ion-item class="app-task__item" (click)="present()">
+            <ion-icon name="md-add"></ion-icon>
+            Add Task
+        </button>
+
+
     </ion-list>
 </ion-content>

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, PopoverController, ToastController, ActionSheetController } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
+import { ViewController, NavController, NavParams, PopoverController, ToastController, ActionSheetController } from 'ionic-angular';
 import { CreatePeoplePopover } from './create-people-popover';
 import { DataService } from '../../services/data.service';
 
@@ -7,22 +7,32 @@ import { DataService } from '../../services/data.service';
   selector: 'page-people',
   templateUrl: 'people.html'
 })
-export class PeoplePage {
+export class PeoplePage implements OnDestroy {
   selectedItem: any;
   isEdit = false;
+  isModal = false;
+
+  people: any[];
+  subscription: any;
 
   constructor(
     public navCtrl: NavController,
+    public viewController: ViewController,
     public navParams: NavParams,
     private popController: PopoverController,
     private toastController: ToastController,
     private actionController: ActionSheetController,
     private service: DataService
   ) {
-    this.selectedItem = navParams.get('item');
-    // this.service.people$.subscribe(x => {
-    //   console.log('data: ', x);
-    // });
+    this.isModal = navParams.get('modal');
+    this.subscription = this.service.people$.subscribe((people) => {
+      this.people = people
+    });
+    
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   present() {
@@ -46,6 +56,12 @@ export class PeoplePage {
       jobs: []
     });
     this.showSuccess();
+  }
+
+  action(profile: any) {
+    if(this.isEdit) {
+      this.service.deletePerson(profile);
+    }
   }
 
   remove(person: any) {
@@ -73,7 +89,7 @@ export class PeoplePage {
       title: 'Actions',
       buttons: [
         {
-          text: 'Edit',
+          text: 'Remove',
           handler: () => {
             this.isEdit = true;
           }
@@ -87,5 +103,9 @@ export class PeoplePage {
       ]
     });
     actionSheet.present();
+  }
+
+  close() {
+    this.viewController.dismiss();
   }
 }
