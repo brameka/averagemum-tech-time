@@ -137,7 +137,6 @@ export class HomePage implements OnDestroy, AfterViewInit {
     let seconds: number = minutes * 60;
     person.time += minutes;
     person.seconds += seconds;
-    // person.seconds += 15;
     this.service.saveProfiles();
   }
 

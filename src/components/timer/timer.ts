@@ -178,12 +178,19 @@ export class Timer implements OnChanges {
     } else {
       this.timer.secondsRemaining -= (15 * 60);
     }
+    this.setPersonSeconds();
     this.timer.displayTime = this.getSecondsAsDigitalClock(this.timer.secondsRemaining);
   }
 
   add() {
     this.timer.secondsRemaining += (15 * 60);
+    this.setPersonSeconds();
     this.timer.displayTime = this.getSecondsAsDigitalClock(this.timer.secondsRemaining);
   }
+
+  setPersonSeconds() {
+    this.person.seconds = this.timer.secondsRemaining;
+  }
+  
 
 }
